@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/mainActivity">
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.weathermvvm.presentation.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/favouriteLocationsFragment"
+        android:name="com.example.weathermvvm.presentation.ui.FavouriteLocationsFragment"
+        android:label="fragment_favourite_locations"
+        tools:layout="@layout/fragment_favourite_locations" >
+        <action
+            android:id="@+id/action_favouriteLocationsFragment_to_searchWeatherFragment"
+            app:destination="@id/searchWeatherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchWeatherFragment"
+        android:name="com.example.weathermvvm.presentation.ui.SearchWeatherFragment"
+        android:label="fragment_search_weather"
+        tools:layout="@layout/fragment_search_weather" >
+        <action
+            android:id="@+id/action_searchWeatherFragment_to_favouriteLocationsFragment"
+            app:destination="@id/favouriteLocationsFragment" />
+    </fragment>
+</navigation>
