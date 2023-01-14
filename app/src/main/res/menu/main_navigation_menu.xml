@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/searchWeatherFragmentItem"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/search" />
 
+    <item
+        android:id="@+id/chooseLocationOnMapFragmentItem"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="@string/map_search" />
+
+    <item
+        android:id="@+id/favouriteLocationsFragmentItem"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="@string/favourites" />
 </menu>

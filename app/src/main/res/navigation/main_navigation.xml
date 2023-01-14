@@ -3,16 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/mainActivity">
+    app:startDestination="@id/searchWeatherFragment">
 
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.example.weathermvvm.presentation.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
     <fragment
         android:id="@+id/favouriteLocationsFragment"
-        android:name="com.example.weathermvvm.presentation.ui.FavouriteLocationsFragment"
+        android:name="com.example.weathermvvm.presentation.ui.favourites.FavouriteLocationsFragment"
         android:label="fragment_favourite_locations"
         tools:layout="@layout/fragment_favourite_locations" >
         <action
@@ -21,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchWeatherFragment"
-        android:name="com.example.weathermvvm.presentation.ui.SearchWeatherFragment"
+        android:name="com.example.weathermvvm.presentation.ui.search.SearchWeatherFragment"
         android:label="fragment_search_weather"
         tools:layout="@layout/fragment_search_weather" >
         <action

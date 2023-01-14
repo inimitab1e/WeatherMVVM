@@ -1,4 +1,4 @@
-package com.example.weathermvvm.presentation.ui
+package com.example.weathermvvm.presentation.ui.favourites
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,16 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.weathermvvm.R
-import com.example.weathermvvm.databinding.FragmentSearchWeatherBinding
+import com.example.weathermvvm.databinding.FragmentFavouriteLocationsBinding
 
-class SearchWeatherFragment : Fragment() {
-    private var binding: FragmentSearchWeatherBinding? = null
+class FavouriteLocationsFragment : Fragment() {
+    private var binding: FragmentFavouriteLocationsBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSearchWeatherBinding.inflate(inflater, container, false)
+        binding = FragmentFavouriteLocationsBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
