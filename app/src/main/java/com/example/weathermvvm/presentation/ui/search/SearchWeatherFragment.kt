@@ -8,16 +8,19 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import com.example.weathermvvm.R
 import com.example.weathermvvm.databinding.FragmentSearchWeatherBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchWeatherFragment : Fragment() {
     private var binding: FragmentSearchWeatherBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSearchWeatherBinding.inflate(inflater, container, false)
-        return binding?.root
+    ): View {
+        val binding = FragmentSearchWeatherBinding.inflate(inflater, container, false)
+        this.binding = binding
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

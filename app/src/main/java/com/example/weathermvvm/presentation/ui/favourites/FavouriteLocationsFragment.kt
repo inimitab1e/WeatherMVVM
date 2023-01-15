@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.weathermvvm.R
 import com.example.weathermvvm.databinding.FragmentFavouriteLocationsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavouriteLocationsFragment : Fragment() {
     private var binding: FragmentFavouriteLocationsBinding? = null
 
