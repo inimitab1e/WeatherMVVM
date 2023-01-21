@@ -21,7 +21,8 @@ android {
         versionName "1.0"
 
         buildConfigField("String", "api_key", apikeyProperties['api_key'])
-        buildConfigField("String", "base_url", apikeyProperties['base_url'])
+        buildConfigField("String", "base_url_coordinates", apikeyProperties['base_url_coordinates'])
+        buildConfigField("String", "base_url_weather", apikeyProperties['base_url_weather'])
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

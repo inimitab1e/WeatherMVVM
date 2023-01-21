@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private val base_url = BuildConfig.base_url
+    private val base_url_coordinates = BuildConfig.base_url_coordinates
 
     @Provides
     @Singleton
@@ -29,7 +29,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(mOkHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(base_url)
+            .baseUrl(base_url_coordinates)
             .client(mOkHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
