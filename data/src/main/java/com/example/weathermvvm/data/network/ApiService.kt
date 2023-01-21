@@ -1,12 +1,11 @@
 package com.example.weathermvvm.data.network
 
-import retrofit2.Call
+import com.example.weathermvvm.domain.model.WeatherResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ApiService {
-
-
-    @GET("q={Location}&days=7")
-    suspend fun getWeatherSearch(@Path("Location") query: String) : Call<WeatherSearchResponse>
+    @GET("forecast.json?key={api_key}q={Location}&days=7")
+    suspend fun getWeatherSearch(@Path("Location") query: String) : Response<WeatherResponse>
 }

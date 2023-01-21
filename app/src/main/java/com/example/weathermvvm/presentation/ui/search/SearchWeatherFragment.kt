@@ -6,13 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.weathermvvm.R
 import com.example.weathermvvm.databinding.FragmentSearchWeatherBinding
+import com.example.weathermvvm.extensions.onTextChange
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchWeatherFragment : Fragment() {
     private var binding: FragmentSearchWeatherBinding? = null
+    private val viewModelSearch: SearchWeatherViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,8 +30,13 @@ class SearchWeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding!!) {
-            searchLocationField.addTextChangedListener {  }
+
+        lifecycleScope.launchWhenStarted {
+            with(binding!!) {
+                searchLocationField.onTextChange { query ->
+                    viewModelSearch.getResponse(query)
+                }
+            }
         }
     }
 

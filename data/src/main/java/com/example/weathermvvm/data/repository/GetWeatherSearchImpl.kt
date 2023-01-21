@@ -1,11 +1,11 @@
 package com.example.weathermvvm.data.repository
 
-import com.example.data.BuildConfig
 import com.example.weathermvvm.domain.repository.GetWeatherSearch
+import com.example.weathermvvm.data.network.ApiService
+import javax.inject.Inject
 
-class GetWeatherSearchImpl : GetWeatherSearch {
-    override suspend fun searchWeather() {
-        TODO("need to create network layer first")
-
-    }
+class GetWeatherSearchImpl @Inject constructor(
+    private val apiService: ApiService
+) : GetWeatherSearch {
+    override suspend fun searchWeather(query: String) = apiService.getWeatherSearch(query)
 }
