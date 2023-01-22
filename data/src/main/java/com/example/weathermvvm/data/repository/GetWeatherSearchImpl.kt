@@ -1,29 +1,29 @@
 package com.example.weathermvvm.data.repository
 
+import com.example.data.BuildConfig
 import com.example.weathermvvm.domain.repository.GetWeatherSearch
 import com.example.weathermvvm.data.network.ApiService
 import javax.inject.Inject
 
 class GetWeatherSearchImpl @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val apiKey: String = BuildConfig.api_key,
+    private val getCoordsUrl: String = BuildConfig.base_url_coordinates,
+    private val getWeatherSearchUrl: String = BuildConfig.base_url_weather
 ) : GetWeatherSearch {
     override suspend fun getCoordinatesByName(
-        url: String,
-        locationName: String,
-        apiKey: String
+        locationName: String
     ) = apiService.getCoordinates(
-        url = url,
+        url = getCoordsUrl,
         locationName = locationName,
         apiKey = apiKey
     )
 
     override suspend fun searchWeather(
-        url: String,
         latitude: Double,
-        longitude: Double,
-        apiKey: String
+        longitude: Double
     ) = apiService.getWeatherSearch(
-        url = url,
+        url = getWeatherSearchUrl,
         latitude = latitude,
         longitude = longitude,
         apiKey = apiKey

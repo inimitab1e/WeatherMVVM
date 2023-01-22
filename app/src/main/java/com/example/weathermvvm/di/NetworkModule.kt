@@ -14,9 +14,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
-    private val base_url_coordinates = BuildConfig.base_url_coordinates
-
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
@@ -29,8 +26,8 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(mOkHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(base_url_coordinates)
             .client(mOkHttpClient)
+            .baseUrl("https://api.openweathermap.org/data/2.5/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

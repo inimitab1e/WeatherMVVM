@@ -5,10 +5,6 @@ plugins {
     id 'com.google.dagger.hilt.android'
 }
 
-def apikeyPropertiesFile = rootProject.file("apikey.properties")
-def apikeyProperties = new Properties()
-apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
-
 android {
     namespace 'com.example.weathermvvm'
     compileSdk 32
@@ -20,9 +16,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField("String", "api_key", apikeyProperties['api_key'])
-        buildConfigField("String", "base_url_coordinates", apikeyProperties['base_url_coordinates'])
-        buildConfigField("String", "base_url_weather", apikeyProperties['base_url_weather'])
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -13,7 +13,7 @@ import javax.inject.Inject
 class SearchWeatherViewModel @Inject constructor(
     private val getWeatherSearchRepository: GetWeatherSearch,
 ) : ViewModel() {
-    private var _weatherOnSuccessResponse = MutableLiveData<WeatherSearchResponse>()
+    private var _weatherOnSuccessResponse = MutableLiveData<WeatherSearchResponse?>()
     val weatherOnSuccessResponse get() = _weatherOnSuccessResponse
 
     fun getResponse(query: String) {
@@ -22,7 +22,18 @@ class SearchWeatherViewModel @Inject constructor(
         }
     }
 
-    private suspend fun onQueryChanged(query: String): WeatherSearchResponse {
-        //TODO
+    private suspend fun onQueryChanged(query: String): WeatherSearchResponse? {
+        val coordsResponse = getWeatherSearchRepository.getCoordinatesByName(locationName = query)
+        return if (coordsResponse.isSuccessful) {
+            val latitude = coordsResponse.body()!![0].lat
+            val longitude = coordsResponse.body()!![0].lon
+
+            getWeatherSearchRepository.searchWeather(
+                latitude = latitude,
+                longitude = longitude
+            ).body()
+        } else {
+            null
+        }
     }
 }

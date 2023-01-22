@@ -2,19 +2,15 @@ package com.example.weathermvvm.domain.repository
 
 import com.example.weathermvvm.domain.model.coordinates.LocationCoordsResponse
 import com.example.weathermvvm.domain.model.weather.WeatherSearchResponse
-import retrofit2.Call
+import retrofit2.Response
 
 interface GetWeatherSearch {
     suspend fun getCoordinatesByName(
-        url: String,
-        locationName: String,
-        apiKey: String
-    ): Call<LocationCoordsResponse>
+        locationName: String
+    ): Response<LocationCoordsResponse>
 
     suspend fun searchWeather(
-        url: String,
         latitude: Double,
-        longitude: Double,
-        apiKey: String
-    ): Call<WeatherSearchResponse>
+        longitude: Double
+    ): Response<WeatherSearchResponse>
 }
