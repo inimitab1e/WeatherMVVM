@@ -13,7 +13,8 @@ import com.example.weathermvvm.domain.model.weather.WeatherSearchResponse
 class SearchWeatherRwAdapter :
     RecyclerView.Adapter<SearchWeatherRwAdapter.SearchWeatherHolder>() {
 
-    class SearchWeatherHolder(binding: WeatherListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class SearchWeatherHolder(binding: WeatherListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         var date = binding.tvDate
         val tempMax = binding.tvTempMax
         val tempMin = binding.tvTempMin
@@ -40,7 +41,7 @@ class SearchWeatherRwAdapter :
 
     override fun onBindViewHolder(holder: SearchWeatherHolder, position: Int) {
         val weatherInfo = response[position]
-        holder.date.text = weatherInfo.dt_txt[position].toString()
+        holder.date.text = weatherInfo.dt_txt
         holder.tempMax.text = weatherInfo.main.temp_max.toString()
         holder.tempMin.text = weatherInfo.main.temp_min.toString()
         holder.pressure.text = weatherInfo.main.pressure.toString()

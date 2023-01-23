@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -43,10 +45,11 @@ class SearchWeatherFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
         binding?.apply {
             searchLocationField.onTextChange { query ->
                 viewModelSearch.getResponse(query)
+                progressBar.isVisible = true
+                rwWeather.isGone = true
             }
         }
 
@@ -56,9 +59,21 @@ class SearchWeatherFragment : Fragment() {
                     setResponse(response)
                     notifyDataSetChanged()
                 }
+                binding?.apply {
+                    progressBar.isGone = true
+                    rwWeather.isVisible = true
+                }
             } else {
-                binding?.test?.text = "Unknown place :("
+                binding?.apply {
+                    test.text = "Unknown place :("
+                    progressBar.isGone = true
+                    rwWeather.isGone = true
+                }
             }
+        }
+
+        if (binding?.test?.text?.isEmpty() == true) {
+            binding?.rwWeather?.isGone = true
         }
     }
 
