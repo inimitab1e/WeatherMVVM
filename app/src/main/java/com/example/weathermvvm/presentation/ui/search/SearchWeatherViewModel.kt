@@ -7,6 +7,7 @@ import com.example.weathermvvm.domain.model.weather.WeatherSearchResponse
 import com.example.weathermvvm.domain.repository.GetWeatherSearch
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,8 +25,8 @@ class SearchWeatherViewModel @Inject constructor(
 
     private suspend fun onQueryChanged(query: String): WeatherSearchResponse? {
         val coordsResponse = getWeatherSearchRepository.getCoordinatesByName(locationName = query)
-        return if (coordsResponse.isSuccessful) {
-            val latitude = coordsResponse.body()!![0].lat
+        return if (coordsResponse.body()?.isEmpty() == false) {
+            val latitude: Double = coordsResponse.body()!![0].lat
             val longitude = coordsResponse.body()!![0].lon
 
             getWeatherSearchRepository.searchWeather(

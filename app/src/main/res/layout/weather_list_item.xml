@@ -29,7 +29,7 @@
                 tools:text="2021-06-04" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTemperature"
+                android:id="@+id/tvTempMax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -44,8 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:textColor="@color/black"
-                app:layout_constraintBaseline_toBaselineOf="@id/tvTemperature"
-                app:layout_constraintStart_toEndOf="@id/tvTemperature"
+                app:layout_constraintBaseline_toBaselineOf="@id/tvTempMax"
+                app:layout_constraintStart_toEndOf="@id/tvTempMax"
                 tools:text="12" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTemperature"
+                app:layout_constraintTop_toBottomOf="@id/tvTempMax"
                 tools:text="Влажность: 48%" />
 
             <com.google.android.material.textview.MaterialTextView

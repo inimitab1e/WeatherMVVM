@@ -8,15 +8,21 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weathermvvm.R
 import com.example.weathermvvm.databinding.FragmentSearchWeatherBinding
 import com.example.weathermvvm.extensions.onTextChange
+import com.example.weathermvvm.presentation.ui.adapter.SearchWeatherRwAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SearchWeatherFragment : Fragment() {
     private var binding: FragmentSearchWeatherBinding? = null
     private val viewModelSearch: SearchWeatherViewModel by viewModels()
+    private val searchWeatherRwAdapter: SearchWeatherRwAdapter by lazy {
+        SearchWeatherRwAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,13 +35,29 @@ class SearchWeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.rwWeather?.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = searchWeatherRwAdapter
+        }
+    }
 
+    override fun onResume() {
+        super.onResume()
 
-        lifecycleScope.launchWhenStarted {
-            with(binding!!) {
-                searchLocationField.onTextChange { query ->
-                    viewModelSearch.getResponse(query)
+        binding?.apply {
+            searchLocationField.onTextChange { query ->
+                viewModelSearch.getResponse(query)
+            }
+        }
+
+        viewModelSearch.weatherOnSuccessResponse.observe(viewLifecycleOwner) { response ->
+            if (response != null) {
+                with(searchWeatherRwAdapter) {
+                    setResponse(response)
+                    notifyDataSetChanged()
                 }
+            } else {
+                binding?.test?.text = "Unknown place :("
             }
         }
     }
