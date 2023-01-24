@@ -62,6 +62,7 @@ class SearchWeatherFragment : Fragment() {
                 binding?.apply {
                     progressBar.isGone = true
                     rwWeather.isVisible = true
+                    test.text = response.city.name
                 }
             } else {
                 binding?.apply {

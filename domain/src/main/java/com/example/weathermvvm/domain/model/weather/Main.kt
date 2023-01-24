@@ -9,5 +9,7 @@ data class Main(
     @SerializedName("temp_max")
     val temp_max: Double,
     @SerializedName("temp_min")
-    val temp_min: Double
+    val temp_min: Double,
+    @SerializedName("himidity")
+    val humidity: Int
 )

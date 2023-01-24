@@ -12,7 +12,8 @@ interface ApiService {
     suspend fun getCoordinates(
         @Url url: String,
         @Query("q") locationName: String,
-        @Query("appid") apiKey: String
+        @Query("appid") apiKey: String,
+        @Query("units") mode: String = "metric"
     ): Response<LocationCoordsResponse>
 
     @GET
@@ -20,6 +21,7 @@ interface ApiService {
         @Url url: String,
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double,
-        @Query("appid") apiKey: String
+        @Query("appid") apiKey: String,
+        @Query("units") mode: String = "metric"
     ): Response<WeatherSearchResponse>
 }

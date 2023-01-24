@@ -22,7 +22,6 @@ class SearchWeatherRwAdapter :
         val pressure = binding.tvPressure
         val windSpeed = binding.tvWindSpeed
         val weatherIcon = binding.ivWeatherIcon
-        val weatherIconDescription = binding.tvDescription
     }
 
     private var response: List<CommonInfo> = listOf()
@@ -45,5 +44,29 @@ class SearchWeatherRwAdapter :
         holder.tempMax.text = weatherInfo.main.temp_max.toString()
         holder.tempMin.text = weatherInfo.main.temp_min.toString()
         holder.pressure.text = weatherInfo.main.pressure.toString()
+        holder.humidity.text = weatherInfo.main.humidity.toString()
+        holder.windSpeed.text = weatherInfo.wind.speed.toString()
+        holder.weatherIcon.setImageResource(getWeatherIcon(weatherInfo.weather[0].main))
     }
+
+    private fun getWeatherIcon(weather: String): Int {
+        return when (weather) {
+            WeatherState.Thunderstorm.toString() -> R.drawable.ic_weather_thunder
+            WeatherState.Drizzle.toString() -> R.drawable.ic_weather_drizzle
+            WeatherState.Rain.toString() -> R.drawable.ic_weather_rain
+            WeatherState.Snow.toString() -> R.drawable.ic_weather_snow
+            WeatherState.Clear.toString() -> R.drawable.ic_weather_sun
+            WeatherState.Clouds.toString() -> R.drawable.ic_weather_clouds
+            else -> R.drawable.ic_weather_mist
+        }
+    }
+}
+
+enum class WeatherState {
+    Thunderstorm,
+    Drizzle,
+    Rain,
+    Snow,
+    Clear,
+    Clouds
 }
