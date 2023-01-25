@@ -18,7 +18,7 @@ This is a weather forecast Android Application with MVVM pattern.
 - Room
 
 ### API
-I used [Open Weather Map API](https://openweathermap.org/api) for collecting weather information and [Open Street Map](https://github.com/osmdroid/osmdroid).
+I used [Open Weather Map API](https://openweathermap.org/api) for collecting weather information and [Open Street Map](https://github.com/osmdroid/osmdroid) for map.
 
 ### Project Setup
 Clone the project and open it using Android Studio. Then create `apikey.properties` in root file. You need to specify the `api_key`, `base_url_coordinates` and `base_url_weather` in your `apikey.properties` file. You can find this values here: [Forecast API](https://openweathermap.org/forecast5), [Coordinates API](https://openweathermap.org/api/geocoding-api)
