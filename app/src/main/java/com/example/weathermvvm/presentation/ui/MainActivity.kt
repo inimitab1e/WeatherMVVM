@@ -26,9 +26,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.home_page) as NavHostFragment
         navConrtoller = navHostFragment.navController
-        binding?.bottomNavigationView?.let { bottomNavigationView ->
-            NavigationUI.setupWithNavController(bottomNavigationView, navConrtoller)
-        }
+        NavigationUI.setupWithNavController(binding!!.bottomNavigationView, navConrtoller)
     }
 
     override fun onDestroy() {

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_favouriteLocationsFragment_to_searchWeatherFragment"
             app:destination="@id/searchWeatherFragment" />
+        <action
+            android:id="@+id/action_favouriteLocationsFragment_to_chooseLocationOnMapFragment"
+            app:destination="@id/chooseLocationOnMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchWeatherFragment"
@@ -22,5 +25,20 @@
         <action
             android:id="@+id/action_searchWeatherFragment_to_favouriteLocationsFragment"
             app:destination="@id/favouriteLocationsFragment" />
+        <action
+            android:id="@+id/action_searchWeatherFragment_to_chooseLocationOnMapFragment"
+            app:destination="@id/chooseLocationOnMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseLocationOnMapFragment"
+        android:name="com.example.weathermvvm.presentation.ui.map.ChooseLocationOnMapFragment"
+        android:label="fragment_choose_location_on_map"
+        tools:layout="@layout/fragment_choose_location_on_map" >
+        <action
+            android:id="@+id/action_chooseLocationOnMapFragment_to_favouriteLocationsFragment"
+            app:destination="@id/favouriteLocationsFragment" />
+        <action
+            android:id="@+id/action_chooseLocationOnMapFragment_to_searchWeatherFragment"
+            app:destination="@id/searchWeatherFragment" />
     </fragment>
 </navigation>
