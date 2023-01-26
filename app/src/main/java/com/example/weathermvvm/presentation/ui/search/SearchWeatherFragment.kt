@@ -1,5 +1,6 @@
 package com.example.weathermvvm.presentation.ui.search
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -13,6 +14,7 @@ import com.example.weathermvvm.databinding.FragmentSearchWeatherBinding
 import com.example.weathermvvm.extensions.onTextChange
 import com.example.weathermvvm.presentation.ui.adapter.SearchWeatherRwAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
@@ -52,12 +54,17 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
                     progressBar.isGone = true
                     rwWeather.isVisible = true
                     tvPlaceName.text = response.city.name
+                    with(ibFavorite) {
+                        isVisible = true
+
+                    }
                 }
             } else {
                 with(binding) {
                     tvPlaceName.text = "Unknown place :("
                     progressBar.isGone = true
                     rwWeather.isGone = true
+                    ibFavorite.isGone = true
                 }
             }
         }

@@ -5,14 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weathermvvm.domain.model.weather.WeatherSearchResponse
 import com.example.weathermvvm.domain.repository.GetWeatherSearch
+import com.example.weathermvvm.domain.repository.local.FavoritePlacesLocalRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchWeatherViewModel @Inject constructor(
     private val getWeatherSearchRepository: GetWeatherSearch,
+    private val checkIfFavoriteImpl: FavoritePlacesLocalRepo
 ) : ViewModel() {
     private var _weatherOnSuccessResponse = MutableLiveData<WeatherSearchResponse?>()
     val weatherOnSuccessResponse get() = _weatherOnSuccessResponse
@@ -20,6 +21,18 @@ class SearchWeatherViewModel @Inject constructor(
     fun getResponse(query: String) {
         viewModelScope.launch {
             weatherOnSuccessResponse.value = onQueryChanged(query)
+        }
+    }
+
+    fun checkIfLocationInFavorite(locationName: String) {
+        viewModelScope.launch {
+            checkIfFavoriteImpl.isInFavorite(name = locationName)
+        }
+    }
+
+    fun addToFavorite(name: String, latitude: Double, longitude: Double) {
+        viewModelScope.launch {
+            
         }
     }
 

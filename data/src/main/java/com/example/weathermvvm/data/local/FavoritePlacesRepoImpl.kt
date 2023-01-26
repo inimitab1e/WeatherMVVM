@@ -16,8 +16,11 @@ class FavoritePlacesRepoImpl(context: Context) {
     //Select all
     fun getAllFavoritePlaces(): List<FavoritePlaces> = db.getAllFavoritePlaces()
 
+    //Search if in the table
+    fun  searchByName(name: String): FavoritePlaces = db.searchByName(name)
+
     //Delete one place
-    fun removePlaceFromFavorite(favoritePlace: FavoritePlaces) {
-        db.removePlaceFromFavorite(favoritePlace)
+    fun removePlaceFromFavorite(name: String) {
+        db.removePlaceFromFavorite(name)
     }
 }

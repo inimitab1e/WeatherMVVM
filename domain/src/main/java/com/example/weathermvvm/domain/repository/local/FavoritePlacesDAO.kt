@@ -15,6 +15,9 @@ interface FavoritePlacesDAO {
     @Query("Select * from favourites")
     fun getAllFavoritePlaces(): List<FavoritePlaces>
 
-    @Delete
-    fun removePlaceFromFavorite(favoritePlace: FavoritePlaces)
+    @Query("Select * from favourites where placeName like :name")
+    fun searchByName(name: String): FavoritePlaces
+
+    @Query("DELETE FROM favourites where placeName like :name")
+    fun removePlaceFromFavorite(name: String)
 }
