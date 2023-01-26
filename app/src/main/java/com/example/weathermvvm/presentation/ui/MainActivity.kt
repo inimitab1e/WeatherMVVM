@@ -5,19 +5,18 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.weathermvvm.R
 import com.example.weathermvvm.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private lateinit var navConrtoller: NavController
-    private var binding: ActivityMainBinding? = null
+    private val binding by viewBinding(ActivityMainBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
 
         setupViews()
     }
@@ -26,11 +25,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.home_page) as NavHostFragment
         navConrtoller = navHostFragment.navController
-        NavigationUI.setupWithNavController(binding!!.bottomNavigationView, navConrtoller)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navConrtoller)
     }
 }

@@ -32,7 +32,7 @@ class SearchWeatherViewModel @Inject constructor(
 
     fun addToFavorite(name: String, latitude: Double, longitude: Double) {
         viewModelScope.launch {
-            
+
         }
     }
 
