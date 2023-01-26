@@ -10,14 +10,14 @@ import com.example.weathermvvm.domain.model.favorite.FavoritePlaces
 interface FavoritePlacesDAO {
 
     @Insert
-    fun addPlaceToFavorite(favoritePlace: FavoritePlaces)
+    suspend fun addPlaceToFavorite(favoritePlace: FavoritePlaces)
 
     @Query("Select * from favourites")
-    fun getAllFavoritePlaces(): List<FavoritePlaces>
+    suspend fun getAllFavoritePlaces(): List<FavoritePlaces>
 
-    @Query("Select * from favourites where placeName like :name")
-    fun searchByName(name: String): FavoritePlaces
+    @Query("SELECT EXISTS(SELECT * FROM favourites WHERE placeName = :name)")
+    suspend fun searchByName(name: String): Boolean
 
     @Query("DELETE FROM favourites where placeName like :name")
-    fun removePlaceFromFavorite(name: String)
+    suspend fun removePlaceFromFavorite(name: String)
 }

@@ -46,6 +46,10 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
 
         viewModelSearch.weatherOnSuccessResponse.observe(viewLifecycleOwner) { response ->
             if (response != null) {
+                val locationName = response.city.name
+                Timber.e("name: %s", locationName)
+                val latitude = response.city.coord.lat
+                val longitude = response.city.coord.lon
                 with(searchWeatherRwAdapter) {
                     setResponse(response)
                     notifyDataSetChanged()
@@ -53,10 +57,30 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
                 with(binding) {
                     progressBar.isGone = true
                     rwWeather.isVisible = true
-                    tvPlaceName.text = response.city.name
+                    tvPlaceName.text = locationName
                     with(ibFavorite) {
                         isVisible = true
 
+                        viewModelSearch.checkIfLocationInFavorite(locationName)
+                        viewModelSearch.isLocationInFavorite.observe(viewLifecycleOwner) { flag ->
+                            if (flag) {
+                                setImageResource(R.drawable.ic_filled_heart)
+                                setOnClickListener {
+                                    setImageResource(R.drawable.ic_unfilled_heart)
+                                    viewModelSearch.deletePlaceFromListOfFavorites(locationName)
+                                }
+                            } else {
+                                setImageResource(R.drawable.ic_unfilled_heart)
+                                setOnClickListener {
+                                    setImageResource(R.drawable.ic_filled_heart)
+                                    viewModelSearch.addToFavorite(
+                                        name = locationName,
+                                        latitude = latitude,
+                                        longitude = longitude
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             } else {

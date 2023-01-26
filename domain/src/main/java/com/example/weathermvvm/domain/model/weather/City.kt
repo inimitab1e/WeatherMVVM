@@ -5,5 +5,7 @@ import com.google.gson.annotations.SerializedName
 @kotlinx.serialization.Serializable
 data class City(
     @SerializedName("name")
-    val name: String
+    val name: String,
+    @SerializedName("coord")
+    val coord: Coord
 )
