@@ -2,42 +2,30 @@ package com.example.weathermvvm.presentation.ui.search
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.weathermvvm.R
 import com.example.weathermvvm.databinding.FragmentSearchWeatherBinding
 import com.example.weathermvvm.extensions.onTextChange
 import com.example.weathermvvm.presentation.ui.adapter.SearchWeatherRwAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
-class SearchWeatherFragment : Fragment() {
-    private var binding: FragmentSearchWeatherBinding? = null
+class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
+
+    private val binding by viewBinding(FragmentSearchWeatherBinding::bind)
     private val viewModelSearch: SearchWeatherViewModel by viewModels()
     private val searchWeatherRwAdapter: SearchWeatherRwAdapter by lazy {
         SearchWeatherRwAdapter()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val binding = FragmentSearchWeatherBinding.inflate(inflater, container, false)
-        this.binding = binding
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.rwWeather?.apply {
+        binding.rwWeather.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = searchWeatherRwAdapter
         }
@@ -45,7 +33,8 @@ class SearchWeatherFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding?.apply {
+
+        with(binding) {
             searchLocationField.onTextChange { query ->
                 viewModelSearch.getResponse(query)
                 progressBar.isVisible = true
@@ -59,27 +48,24 @@ class SearchWeatherFragment : Fragment() {
                     setResponse(response)
                     notifyDataSetChanged()
                 }
-                binding?.apply {
+                with(binding) {
                     progressBar.isGone = true
                     rwWeather.isVisible = true
-                    test.text = response.city.name
+                    tvPlaceName.text = response.city.name
                 }
             } else {
-                binding?.apply {
-                    test.text = "Unknown place :("
+                with(binding) {
+                    tvPlaceName.text = "Unknown place :("
                     progressBar.isGone = true
                     rwWeather.isGone = true
                 }
             }
         }
 
-        if (binding?.test?.text?.isEmpty() == true) {
-            binding?.rwWeather?.isGone = true
+        with(binding) {
+            if (tvPlaceName.text.isEmpty()) {
+                rwWeather.isGone = true
+            }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
     }
 }

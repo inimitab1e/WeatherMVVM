@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherMVVM</string>
+    <string name="app_name">Weather</string>
     <string name="city_list">City list</string>
     <string name="favourites">Favourites</string>
     <!-- TODO: Remove or change this placeholder text -->
