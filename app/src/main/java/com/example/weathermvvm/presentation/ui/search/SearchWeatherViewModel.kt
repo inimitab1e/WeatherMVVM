@@ -20,9 +20,6 @@ class SearchWeatherViewModel @Inject constructor(
     private var _weatherOnSuccessResponse = MutableLiveData<WeatherSearchResponse?>()
     val weatherOnSuccessResponse get() = _weatherOnSuccessResponse
 
-    private var _listOfFavorites = MutableLiveData<List<FavoritePlaces>?>()
-    val listOfFavorites get() = _listOfFavorites
-
     private var _isLocationInFavorite = MutableLiveData<Boolean>()
     val isLocationInFavorite get() = _isLocationInFavorite
 
@@ -47,12 +44,6 @@ class SearchWeatherViewModel @Inject constructor(
                     longitude = longitude
                 )
             )
-        }
-    }
-
-    fun getListOfFavoritePlaces() {
-        viewModelScope.launch {
-            listOfFavorites.postValue(localRepository.getAllFavoritePlaces())
         }
     }
 

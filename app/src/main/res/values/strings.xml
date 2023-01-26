@@ -6,4 +6,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Search</string>
     <string name="map_search">Map search</string>
+    <string name="favorite_locations_list_empty_notification">Список избранных мест пуст</string>
 </resources>

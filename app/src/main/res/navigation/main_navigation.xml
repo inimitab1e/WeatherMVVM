@@ -9,7 +9,7 @@
         android:id="@+id/favouriteLocationsFragment"
         android:name="com.example.weathermvvm.presentation.ui.favourites.FavouriteLocationsFragment"
         android:label="fragment_favourite_locations"
-        tools:layout="@layout/fragment_favourite_locations" >
+        tools:layout="@layout/fragment_favorite_locations" >
         <action
             android:id="@+id/action_favouriteLocationsFragment_to_searchWeatherFragment"
             app:destination="@id/searchWeatherFragment" />

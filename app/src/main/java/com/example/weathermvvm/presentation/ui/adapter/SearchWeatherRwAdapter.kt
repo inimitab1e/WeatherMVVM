@@ -15,7 +15,8 @@ class SearchWeatherRwAdapter :
 
     class SearchWeatherHolder(binding: WeatherListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var date = binding.tvDate
+
+        val date = binding.tvDate
         val tempMax = binding.tvTempMax
         val tempMin = binding.tvTempMin
         val humidity = binding.tvHumidity

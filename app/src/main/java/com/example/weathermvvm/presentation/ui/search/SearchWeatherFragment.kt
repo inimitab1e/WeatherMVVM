@@ -1,6 +1,5 @@
 package com.example.weathermvvm.presentation.ui.search
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -14,7 +13,6 @@ import com.example.weathermvvm.databinding.FragmentSearchWeatherBinding
 import com.example.weathermvvm.extensions.onTextChange
 import com.example.weathermvvm.presentation.ui.adapter.SearchWeatherRwAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
@@ -47,9 +45,9 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
         viewModelSearch.weatherOnSuccessResponse.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 val locationName = response.city.name
-                Timber.e("name: %s", locationName)
                 val latitude = response.city.coord.lat
                 val longitude = response.city.coord.lon
+
                 with(searchWeatherRwAdapter) {
                     setResponse(response)
                     notifyDataSetChanged()

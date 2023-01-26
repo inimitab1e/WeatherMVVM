@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.ui.favourites.FavouriteLocationsFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rwFavoriteLocations"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/favorite_locations_list_item" />
+
+    <TextView
+        android:id="@+id/listEmptyNotification"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/favorite_locations_list_empty_notification"
+        android:gravity="center"
+        android:visibility="gone"/>
+
+</FrameLayout>
