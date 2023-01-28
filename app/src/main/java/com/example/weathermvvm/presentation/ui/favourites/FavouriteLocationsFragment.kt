@@ -3,9 +3,12 @@ package com.example.weathermvvm.presentation.ui.favourites
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.weathermvvm.R
@@ -13,6 +16,7 @@ import com.example.weathermvvm.databinding.FragmentFavoriteLocationsBinding
 import com.example.weathermvvm.domain.model.favorite.FavoritePlaces
 import com.example.weathermvvm.presentation.ui.adapter.FavoriteLocationsRwAdapter
 import com.example.weathermvvm.presentation.ui.adapter.features.OnItemClickListener
+import com.example.weathermvvm.util.StringConstants
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -51,7 +55,11 @@ class FavouriteLocationsFragment : Fragment(R.layout.fragment_favorite_locations
 
         favoriteLocationsRwAdapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(name: String) {
-                Timber.e("value: %s", name)
+                setFragmentResult(
+                    StringConstants.fromFavoriteToSearchKey,
+                    bundleOf(StringConstants.fromFavoriteToSearchDataName to name)
+                )
+                findNavController().navigate(R.id.action_favouriteLocationsFragment_to_searchWeatherFragment)
             }
         })
     }
