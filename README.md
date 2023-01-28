@@ -1,6 +1,6 @@
 # WeatherMVVM
 ### Project Description
-This is a weather forecast Android Application with MVVM pattern.
+This is a weather (5 Day / 3 Hour) forecast Android Application with MVVM pattern.
 
 ### Features
 - Searching weather by name;
