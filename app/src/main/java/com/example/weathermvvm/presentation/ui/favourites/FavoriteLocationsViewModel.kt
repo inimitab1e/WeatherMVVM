@@ -17,9 +17,16 @@ class FavoriteLocationsViewModel @Inject constructor(
     private var _listOfFavorites = MutableLiveData<List<FavoritePlaces>>()
     val listOfFavorites get() = _listOfFavorites
 
+    private var _selectedLocation = MutableLiveData<String>()
+    val selectedLocation get() = _selectedLocation
+
     fun getListOfFavoritePlaces() {
         viewModelScope.launch {
             listOfFavorites.postValue(localRepository.getAllFavoritePlaces())
         }
+    }
+
+    fun useSelectedLocation(name: String) {
+        selectedLocation.postValue(name)
     }
 }

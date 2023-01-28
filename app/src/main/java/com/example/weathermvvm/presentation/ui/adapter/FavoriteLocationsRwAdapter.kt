@@ -5,14 +5,31 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weathermvvm.databinding.FavoriteLocationsListItemBinding
 import com.example.weathermvvm.domain.model.favorite.FavoritePlaces
+import com.example.weathermvvm.presentation.ui.adapter.features.OnItemClickListener
 
 class FavoriteLocationsRwAdapter :
     RecyclerView.Adapter<FavoriteLocationsRwAdapter.FavoriteLocationsHolder>() {
 
-    class FavoriteLocationsHolder(binding: FavoriteLocationsListItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    private lateinit var mListener: OnItemClickListener
 
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        mListener = listener
+    }
+
+    class FavoriteLocationsHolder(
+        binding: FavoriteLocationsListItemBinding,
+        clickListener: OnItemClickListener
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        val item = binding.cardView
         val locationName = binding.tvPlaceName
+
+        init {
+            item.setOnClickListener {
+                clickListener.onItemClick(locationName.text.toString())
+            }
+        }
+
     }
 
     private var response = mutableListOf<FavoritePlaces>()
@@ -28,7 +45,7 @@ class FavoriteLocationsRwAdapter :
                 viewGroup,
                 false
             )
-        return FavoriteLocationsHolder(binding)
+        return FavoriteLocationsHolder(binding, mListener)
     }
 
     override fun getItemCount(): Int = response.size
@@ -37,4 +54,6 @@ class FavoriteLocationsRwAdapter :
         val favoritePlaces = response[position]
         holder.locationName.text = favoritePlaces.placeName
     }
+
+
 }

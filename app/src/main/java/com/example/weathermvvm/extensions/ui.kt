@@ -2,7 +2,11 @@ package com.example.weathermvvm.extensions
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.EditText
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+
 
 inline fun EditText.onTextChange(crossinline listener: (String) -> Unit) {
     this.addTextChangedListener(object: TextWatcher {
@@ -17,6 +21,5 @@ inline fun EditText.onTextChange(crossinline listener: (String) -> Unit) {
         override fun afterTextChanged(p0: Editable?) {
             //NO OP
         }
-
     })
 }
