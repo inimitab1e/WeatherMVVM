@@ -1,6 +1,7 @@
 package com.example.weathermvvm.data.repository
 
 import com.example.data.BuildConfig
+import com.example.weathermvvm.data.AppDispatchers
 import com.example.weathermvvm.domain.repository.GetWeatherSearch
 import com.example.weathermvvm.data.network.ApiService
 import kotlinx.coroutines.CoroutineDispatcher
@@ -13,11 +14,11 @@ class GetWeatherSearchImpl @Inject constructor(
     private val apiKey: String = BuildConfig.api_key,
     private val getCoordsUrl: String = BuildConfig.base_url_coordinates,
     private val getWeatherSearchUrl: String = BuildConfig.base_url_weather,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatchers: AppDispatchers
 ) : GetWeatherSearch {
     override suspend fun getCoordinatesByName(
         locationName: String
-    ) = withContext(dispatcher) {
+    ) = withContext(dispatchers.io) {
         apiService.getCoordinates(
             url = getCoordsUrl,
             locationName = locationName,
@@ -28,7 +29,7 @@ class GetWeatherSearchImpl @Inject constructor(
     override suspend fun searchWeather(
         latitude: Double,
         longitude: Double
-    ) = withContext(dispatcher) {
+    ) = withContext(dispatchers.io) {
         apiService.getWeatherSearch(
             url = getWeatherSearchUrl,
             latitude = latitude,

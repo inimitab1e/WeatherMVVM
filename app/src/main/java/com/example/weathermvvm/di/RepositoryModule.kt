@@ -1,5 +1,6 @@
 package com.example.weathermvvm.di
 
+import com.example.weathermvvm.data.AppDispatchers
 import com.example.weathermvvm.domain.repository.GetWeatherSearch
 import com.example.weathermvvm.data.network.ApiService
 import com.example.weathermvvm.data.repository.GetWeatherSearchImpl
@@ -17,5 +18,5 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideGetWeatherSearch(client: Retrofit) : GetWeatherSearch =
-        GetWeatherSearchImpl(apiService = client.create(ApiService::class.java))
+        GetWeatherSearchImpl(apiService = client.create(ApiService::class.java), dispatchers = AppDispatchers())
 }

@@ -1,6 +1,7 @@
 package com.example.weathermvvm.di
 
 import android.content.Context
+import com.example.weathermvvm.data.AppDispatchers
 import com.example.weathermvvm.data.local.FavoritePlacesDAOImpl
 import dagger.Module
 import dagger.Provides
@@ -16,5 +17,5 @@ object LocalRepositoryModule {
     @Provides
     @Singleton
     fun provideFavoritePlacesLocalRepo(@ApplicationContext context: Context): FavoritePlacesDAOImpl =
-        FavoritePlacesDAOImpl(context = context)
+        FavoritePlacesDAOImpl(context = context, dispatchers = AppDispatchers())
 }
