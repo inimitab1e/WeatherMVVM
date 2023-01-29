@@ -14,13 +14,13 @@ class FavoritePlacesDAOImpl(context: Context) {
     }
 
     //Select all
-    suspend fun getAllFavoritePlaces(): List<FavoritePlaces> = db.getAllFavoritePlaces()
+    suspend fun getAllFavoritePlaces(): MutableList<FavoritePlaces> = db.getAllFavoritePlaces()
 
     //Search if in the table
     suspend fun searchByName(name: String): Boolean = db.searchByName(name)
 
     //Delete one place
-    suspend fun removePlaceFromFavorite(name: String) {
-        db.removePlaceFromFavorite(name)
+    suspend fun removePlaceFromFavoriteByName(name: String) {
+        db.removePlaceFromFavoriteByName(name)
     }
 }

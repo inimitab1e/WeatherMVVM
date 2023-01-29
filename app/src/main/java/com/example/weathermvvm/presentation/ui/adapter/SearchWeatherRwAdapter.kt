@@ -19,9 +19,9 @@ class SearchWeatherRwAdapter :
         val date = binding.tvDate
         val tempMax = binding.tvTempMax
         val tempMin = binding.tvTempMin
-        val humidity = binding.tvHumidity
-        val pressure = binding.tvPressure
-        val windSpeed = binding.tvWindSpeed
+        val humidity = binding.tvHumidityValue
+        val pressure = binding.tvPressureValue
+        val windSpeed = binding.tvWindSpeedValue
         val weatherIcon = binding.ivWeatherIcon
     }
 

@@ -14,11 +14,8 @@ class FavoriteLocationsViewModel @Inject constructor(
     private val localRepository: FavoritePlacesDAOImpl
 ) : ViewModel() {
 
-    private var _listOfFavorites = MutableLiveData<List<FavoritePlaces>>()
+    private var _listOfFavorites = MutableLiveData<MutableList<FavoritePlaces>>()
     val listOfFavorites get() = _listOfFavorites
-
-    private var _selectedLocation = MutableLiveData<String>()
-    val selectedLocation get() = _selectedLocation
 
     fun getListOfFavoritePlaces() {
         viewModelScope.launch {
@@ -26,7 +23,21 @@ class FavoriteLocationsViewModel @Inject constructor(
         }
     }
 
-    fun useSelectedLocation(name: String) {
-        selectedLocation.postValue(name)
+    fun deletePlaceFromListOfFavorites(name: String) {
+        viewModelScope.launch {
+            localRepository.removePlaceFromFavoriteByName(name = name)
+        }
+    }
+
+    fun addToFavorite(name: String, latitude: Double, longitude: Double) {
+        viewModelScope.launch {
+            localRepository.addPlaceToFavorite(
+                FavoritePlaces(
+                    placeName = name,
+                    latitude = latitude,
+                    longitude = longitude
+                )
+            )
+        }
     }
 }

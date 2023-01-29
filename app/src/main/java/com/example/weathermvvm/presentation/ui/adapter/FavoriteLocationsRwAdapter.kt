@@ -29,13 +29,19 @@ class FavoriteLocationsRwAdapter :
                 clickListener.onItemClick(locationName.text.toString())
             }
         }
-
     }
 
     private var response = mutableListOf<FavoritePlaces>()
 
-    fun setResponse(favoritePlaces: List<FavoritePlaces>) {
-        response = favoritePlaces.toMutableList()
+    fun setResponse(favoritePlaces: MutableList<FavoritePlaces>) {
+        response = favoritePlaces
+    }
+
+    fun getItem(position: Int) = response.get(position)
+
+    fun removeAt(position: Int) {
+        response.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): FavoriteLocationsHolder {
@@ -54,6 +60,4 @@ class FavoriteLocationsRwAdapter :
         val favoritePlaces = response[position]
         holder.locationName.text = favoritePlaces.placeName
     }
-
-
 }

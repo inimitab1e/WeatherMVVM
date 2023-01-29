@@ -49,7 +49,7 @@ class SearchWeatherViewModel @Inject constructor(
 
     fun deletePlaceFromListOfFavorites(name: String) {
         viewModelScope.launch {
-            localRepository.removePlaceFromFavorite(name = name)
+            localRepository.removePlaceFromFavoriteByName(name = name)
         }
     }
 

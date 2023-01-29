@@ -1,94 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/transparent"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="4dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:cardElevation="0dp">
+        android:background="?android:selectableItemBackground"
+        android:padding="8dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?android:selectableItemBackground"
-            android:padding="8dp">
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2021-06-04" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="2021-06-04" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvTempMax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="48sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDate"
+            tools:text="32" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTempMax"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="48sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDate"
-                tools:text="32" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvTempMin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/black"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvTempMax"
+            app:layout_constraintStart_toEndOf="@id/tvTempMax"
+            tools:text="12" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTempMin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"
-                app:layout_constraintBaseline_toBaselineOf="@id/tvTempMax"
-                app:layout_constraintStart_toEndOf="@id/tvTempMax"
-                tools:text="12" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvHumidityText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTempMax"
+            tools:text="Влажность: " />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvHumidity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTempMax"
-                tools:text="Влажность: 48%" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvHumidityValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvPressure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvHumidity"
-                tools:text="Давление: 1012 мм рт. ст." />
+            app:layout_constraintStart_toEndOf="@+id/tvHumidityText"
+            app:layout_constraintTop_toBottomOf="@+id/tvTempMax"
+            tools:text="48%" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvWindSpeed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPressure"
-                tools:text="Wind speed: 1.5 m/s" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvPressureText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHumidityText"
+            tools:text="Давление: " />
 
-            <ImageView
-                android:id="@+id/ivWeatherIcon"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginVertical="8dp"
-                android:layout_marginEnd="8dp"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvPressureValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
 
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription"
-                tools:src="@drawable/ic_weather_drizzle" />
+            app:layout_constraintStart_toEndOf="@+id/tvPressureText"
+            app:layout_constraintTop_toBottomOf="@+id/tvHumidityValue"
+            tools:text="1012 мм рт. ст." />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvWindSpeedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPressureText"
+            tools:text="Wind speed: " />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvWindSpeedValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+
+            app:layout_constraintStart_toEndOf="@+id/tvWindSpeedText"
+            app:layout_constraintTop_toBottomOf="@+id/tvPressureValue"
+            tools:text="1.5 m/s" />
+
+        <ImageView
+            android:id="@+id/ivWeatherIcon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginVertical="8dp"
+            android:layout_marginEnd="8dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/ic_weather_drizzle" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

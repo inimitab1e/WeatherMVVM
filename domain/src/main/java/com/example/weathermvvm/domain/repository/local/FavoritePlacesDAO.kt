@@ -13,11 +13,11 @@ interface FavoritePlacesDAO {
     suspend fun addPlaceToFavorite(favoritePlace: FavoritePlaces)
 
     @Query("Select * from favourites")
-    suspend fun getAllFavoritePlaces(): List<FavoritePlaces>
+    suspend fun getAllFavoritePlaces(): MutableList<FavoritePlaces>
 
     @Query("SELECT EXISTS(SELECT * FROM favourites WHERE placeName = :name)")
     suspend fun searchByName(name: String): Boolean
 
     @Query("DELETE FROM favourites where placeName like :name")
-    suspend fun removePlaceFromFavorite(name: String)
+    suspend fun removePlaceFromFavoriteByName(name: String)
 }
