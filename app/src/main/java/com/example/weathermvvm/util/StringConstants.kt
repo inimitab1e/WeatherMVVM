@@ -6,4 +6,6 @@ object StringConstants {
     const val fromFavoriteToSearchDataName = "locationName"
     const val deletedSnackBarNotify = "Удалена локация: "
     const val undo = "Отменить"
+    const val unknownError = "Неизвестная ошибка :("
+    const val whenSearchFieldIsEmpty = "Введите название населённого пункта"
 }

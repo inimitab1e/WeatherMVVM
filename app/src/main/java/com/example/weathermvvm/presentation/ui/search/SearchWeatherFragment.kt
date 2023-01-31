@@ -3,6 +3,7 @@ package com.example.weathermvvm.presentation.ui.search
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
@@ -15,6 +16,7 @@ import com.example.weathermvvm.domain.model.weather.WeatherSearchResponse
 import com.example.weathermvvm.extensions.onTextChange
 import com.example.weathermvvm.presentation.ui.adapter.SearchWeatherRwAdapter
 import com.example.weathermvvm.util.StringConstants
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,6 +35,22 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
             layoutManager = LinearLayoutManager(activity)
             adapter = searchWeatherRwAdapter
         }
+
+        viewModelSearch.weatherOnSuccessResponse.observe(viewLifecycleOwner) { response ->
+            if (response != null) {
+                with(searchWeatherRwAdapter) {
+                    setResponse(response)
+                    notifyDataSetChanged()
+                }
+                successResponseUiSetup(response)
+            } else {
+                unknownPlaceUiSetup()
+            }
+        }
+
+        viewModelSearch.onErrorResponse.observe(viewLifecycleOwner) { errorMessage ->
+            Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onResume() {
@@ -47,18 +65,10 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
         }
 
         binding.searchLocationField.onTextChange { query ->
-            doRequest(query)
-        }
-
-        viewModelSearch.weatherOnSuccessResponse.observe(viewLifecycleOwner) { response ->
-            if (response != null) {
-                with(searchWeatherRwAdapter) {
-                    setResponse(response)
-                    notifyDataSetChanged()
-                }
-                successResponseUiSetup(response)
+            if (binding.searchLocationField.text.isNotEmpty()) {
+                doRequest(query)
             } else {
-                unknownPlaceUiSetup()
+                emptySearchFieldUiSetup()
             }
         }
 
@@ -67,8 +77,6 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
                 rwWeather.isGone = true
             }
         }
-
-
     }
 
     private fun successResponseUiSetup(response: WeatherSearchResponse) {
@@ -92,8 +100,8 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
             isVisible = true
 
             viewModelSearch.checkIfLocationInFavorite(locationName)
-            viewModelSearch.isLocationInFavorite.observe(viewLifecycleOwner) { flag ->
-                if (flag) {
+            viewModelSearch.isLocationInFavorite.observe(viewLifecycleOwner) { inFavorite ->
+                if (inFavorite) {
                     setImageResource(R.drawable.ic_filled_heart)
                     setOnClickListener {
                         setImageResource(R.drawable.ic_unfilled_heart)
@@ -117,6 +125,15 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
     private fun unknownPlaceUiSetup() {
         with(binding) {
             tvPlaceName.text = StringConstants.unknownPlace
+            progressBar.isGone = true
+            rwWeather.isGone = true
+            ibFavorite.isGone = true
+        }
+    }
+
+    private fun emptySearchFieldUiSetup() {
+        with(binding) {
+            tvPlaceName.text = StringConstants.whenSearchFieldIsEmpty
             progressBar.isGone = true
             rwWeather.isGone = true
             ibFavorite.isGone = true

@@ -7,4 +7,5 @@
     <string name="search">Search</string>
     <string name="map_search">Map search</string>
     <string name="favorite_locations_list_empty_notification">Список избранных мест пуст</string>
+    <string name="when_search_field_is_empty">Введите название населённого пункта</string>
 </resources>

@@ -1,7 +1,7 @@
 package com.example.weathermvvm.di
 
 import com.example.weathermvvm.data.network.ApiService
-import com.example.weathermvvm.domain.network_features.retrofit_result.ResultAdapterFactory
+import com.example.weathermvvm.domain.network_features.NetworkResponseAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,7 +35,7 @@ object NetworkModule {
         return Retrofit.Builder()
             .client(mOkHttpClient)
             .baseUrl("https://api.openweathermap.org/data/2.5/")
-            .addCallAdapterFactory(ResultAdapterFactory())
+            .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

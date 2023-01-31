@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weathermvvm.data.local.FavoritePlacesDAOImpl
+import com.example.weathermvvm.domain.model.coordinates.LocationCoordsResponse
 import com.example.weathermvvm.domain.model.favorite.FavoritePlaces
 import com.example.weathermvvm.domain.model.weather.WeatherSearchResponse
+import com.example.weathermvvm.domain.network_features.NetworkResponse
 import com.example.weathermvvm.domain.repository.GetWeatherSearch
+import com.example.weathermvvm.util.StringConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,9 +27,31 @@ class SearchWeatherViewModel @Inject constructor(
     private var _isLocationInFavorite = MutableLiveData<Boolean>()
     val isLocationInFavorite get() = _isLocationInFavorite
 
+    private var _onErrorResponse = MutableLiveData<String>()
+    val onErrorResponse get() = _onErrorResponse
+
     fun getResponse(query: String) {
         viewModelScope.launch {
-            weatherOnSuccessResponse.postValue(getWeatherSearchRepository.searchWeather(query))
+            when(val coordsResponse = getWeatherSearchRepository.getCoordinatesByName(query)) {
+                is NetworkResponse.Success -> if (coordsResponse.body.isNotEmpty()) {
+                    getWeatherResponse(
+                        latitude = coordsResponse.body[0].lat,
+                        longitude = coordsResponse.body[0].lon
+                    )
+                } else {
+                    weatherOnSuccessResponse.postValue(null)
+                }
+                is NetworkResponse.NetworkError -> onErrorResponse.postValue(coordsResponse.error.message)
+                else -> onErrorResponse.postValue(StringConstants.unknownError)
+            }
+        }
+    }
+
+    private suspend fun getWeatherResponse(latitude: Double, longitude: Double) {
+        when(val response = getWeatherSearchRepository.getWeatherByCoordinates(latitude, longitude)) {
+            is NetworkResponse.Success -> weatherOnSuccessResponse.postValue(response.body)
+            is NetworkResponse.NetworkError -> onErrorResponse.postValue(response.error.message)
+            else -> onErrorResponse.postValue(StringConstants.unknownError)
         }
     }
 
