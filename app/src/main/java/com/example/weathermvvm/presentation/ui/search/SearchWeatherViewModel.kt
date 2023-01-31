@@ -1,5 +1,6 @@
 package com.example.weathermvvm.presentation.ui.search
 
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,7 +26,7 @@ class SearchWeatherViewModel @Inject constructor(
 
     fun getResponse(query: String) {
         viewModelScope.launch {
-            weatherOnSuccessResponse.postValue(onQueryChanged(query))
+            weatherOnSuccessResponse.postValue(getWeatherSearchRepository.searchWeather(query))
         }
     }
 
@@ -50,21 +51,6 @@ class SearchWeatherViewModel @Inject constructor(
     fun deletePlaceFromListOfFavorites(name: String) {
         viewModelScope.launch {
             localRepository.removePlaceFromFavoriteByName(name = name)
-        }
-    }
-
-    private suspend fun onQueryChanged(query: String): WeatherSearchResponse? {
-        val coordsResponse = getWeatherSearchRepository.getCoordinatesByName(locationName = query)
-        return if (coordsResponse.body()?.isEmpty() == false) {
-            val latitude: Double = coordsResponse.body()!![0].lat
-            val longitude = coordsResponse.body()!![0].lon
-
-            getWeatherSearchRepository.searchWeather(
-                latitude = latitude,
-                longitude = longitude
-            ).body()
-        } else {
-            null
         }
     }
 }
