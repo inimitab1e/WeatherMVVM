@@ -5,12 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weathermvvm.data.local.FavoritePlacesDAOImpl
-import com.example.weathermvvm.domain.model.coordinates.LocationCoordsResponse
 import com.example.weathermvvm.domain.model.favorite.FavoritePlaces
 import com.example.weathermvvm.domain.model.weather.WeatherSearchResponse
 import com.example.weathermvvm.domain.network_features.NetworkResponse
 import com.example.weathermvvm.domain.repository.GetWeatherSearch
-import com.example.weathermvvm.util.StringConstants
+import com.example.weathermvvm.utils.StringConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

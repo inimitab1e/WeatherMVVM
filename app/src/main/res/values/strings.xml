@@ -8,4 +8,6 @@
     <string name="map_search">Map search</string>
     <string name="favorite_locations_list_empty_notification">Список избранных мест пуст</string>
     <string name="when_search_field_is_empty">Введите название населённого пункта</string>
+    <string name="bad_network_connection_title">Отсутствует соединение с сетью</string>
+    <string name="bad_network_connection_message">Пожалуйста, проверьте соединение с интернетом для продолжения работы приложения</string>
 </resources>

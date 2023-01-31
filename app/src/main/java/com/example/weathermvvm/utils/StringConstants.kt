@@ -1,4 +1,4 @@
-package com.example.weathermvvm.util
+package com.example.weathermvvm.utils
 
 object StringConstants {
     const val unknownPlace = "We dont know this place :("

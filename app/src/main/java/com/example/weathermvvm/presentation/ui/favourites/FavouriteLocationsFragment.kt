@@ -19,7 +19,7 @@ import com.example.weathermvvm.domain.model.favorite.FavoritePlaces
 import com.example.weathermvvm.presentation.ui.adapter.FavoriteLocationsRwAdapter
 import com.example.weathermvvm.presentation.ui.adapter.features.OnItemClickListener
 import com.example.weathermvvm.presentation.ui.adapter.features.SwipeToDeleteCallback
-import com.example.weathermvvm.util.StringConstants
+import com.example.weathermvvm.utils.StringConstants
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 

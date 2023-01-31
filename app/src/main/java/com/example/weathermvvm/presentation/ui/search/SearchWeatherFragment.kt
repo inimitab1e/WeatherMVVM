@@ -15,8 +15,7 @@ import com.example.weathermvvm.databinding.FragmentSearchWeatherBinding
 import com.example.weathermvvm.domain.model.weather.WeatherSearchResponse
 import com.example.weathermvvm.extensions.onTextChange
 import com.example.weathermvvm.presentation.ui.adapter.SearchWeatherRwAdapter
-import com.example.weathermvvm.util.StringConstants
-import com.google.android.material.snackbar.Snackbar
+import com.example.weathermvvm.utils.StringConstants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
