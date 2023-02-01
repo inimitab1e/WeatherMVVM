@@ -11,6 +11,7 @@ import com.example.weathermvvm.domain.network_features.NetworkResponse
 import com.example.weathermvvm.domain.repository.GetWeatherSearch
 import com.example.weathermvvm.utils.StringConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,7 +30,11 @@ class SearchWeatherViewModel @Inject constructor(
     private var _onErrorResponse = MutableLiveData<String>()
     val onErrorResponse get() = _onErrorResponse
 
+    private var _isLoading = MutableLiveData(false)
+    val isLoading get() = _isLoading
+
     fun getResponse(query: String) {
+        isLoading.postValue(true)
         viewModelScope.launch {
             when(val coordsResponse = getWeatherSearchRepository.getCoordinatesByName(query)) {
                 is NetworkResponse.Success -> if (coordsResponse.body.isNotEmpty()) {
@@ -39,10 +44,12 @@ class SearchWeatherViewModel @Inject constructor(
                     )
                 } else {
                     weatherOnSuccessResponse.postValue(null)
+                    isLoading.postValue(false)
                 }
                 is NetworkResponse.NetworkError -> onErrorResponse.postValue(coordsResponse.error.message)
                 else -> onErrorResponse.postValue(StringConstants.unknownError)
             }
+            isLoading.postValue(false)
         }
     }
 
@@ -52,6 +59,7 @@ class SearchWeatherViewModel @Inject constructor(
             is NetworkResponse.NetworkError -> onErrorResponse.postValue(response.error.message)
             else -> onErrorResponse.postValue(StringConstants.unknownError)
         }
+        isLoading.postValue(false)
     }
 
     fun checkIfLocationInFavorite(name: String) {

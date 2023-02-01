@@ -50,6 +50,12 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
         viewModelSearch.onErrorResponse.observe(viewLifecycleOwner) { errorMessage ->
             Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show()
         }
+
+        with(binding) {
+            if (tvPlaceName.text.isEmpty()) {
+                rwWeather.isGone = true
+            }
+        }
     }
 
     override fun onResume() {
@@ -71,9 +77,11 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
             }
         }
 
-        with(binding) {
-            if (tvPlaceName.text.isEmpty()) {
-                rwWeather.isGone = true
+        viewModelSearch.isLoading.observe(viewLifecycleOwner) { loadingState ->
+            with(binding) {
+                tvPlaceName.isVisible = !loadingState
+                rwWeather.isVisible = !loadingState
+                progressBar.isVisible = loadingState
             }
         }
     }
@@ -83,7 +91,6 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
             val locationName = response.city.name
             val latitude = response.city.coord.lat
             val longitude = response.city.coord.lon
-            progressBar.isGone = true
             rwWeather.isVisible = true
             tvPlaceName.text = locationName
             favoritePlaceLogicSetup(locationName, latitude, longitude)
@@ -124,8 +131,6 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
     private fun unknownPlaceUiSetup() {
         with(binding) {
             tvPlaceName.text = StringConstants.unknownPlace
-            progressBar.isGone = true
-            rwWeather.isGone = true
             ibFavorite.isGone = true
         }
     }
@@ -133,7 +138,6 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
     private fun emptySearchFieldUiSetup() {
         with(binding) {
             tvPlaceName.text = StringConstants.whenSearchFieldIsEmpty
-            progressBar.isGone = true
             rwWeather.isGone = true
             ibFavorite.isGone = true
         }
@@ -141,8 +145,6 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
 
     private fun doRequest(query: String) {
         viewModelSearch.getResponse(query)
-        binding.progressBar.isVisible = true
-        binding.rwWeather.isGone = true
     }
 
     private fun setNameToEditView(result: String) {

@@ -12,11 +12,15 @@ import com.example.weathermvvm.R
 import com.example.weathermvvm.databinding.ActivityMainBinding
 import com.example.weathermvvm.utils.NetworkConnection
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private lateinit var navConrtoller: NavController
     private val binding by viewBinding(ActivityMainBinding::bind)
+    private val connectivity: NetworkConnection by lazy {
+        NetworkConnection(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +37,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun checkConnectivity() {
-        val connectivity = NetworkConnection(this)
         connectivity.observe(this){
                 isConnected ->
              if (!isConnected) {

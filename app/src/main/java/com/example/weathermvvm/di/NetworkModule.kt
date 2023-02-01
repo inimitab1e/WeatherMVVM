@@ -1,10 +1,13 @@
 package com.example.weathermvvm.di
 
+import android.content.Context
 import com.example.weathermvvm.data.network.ApiService
 import com.example.weathermvvm.domain.network_features.NetworkResponseAdapterFactory
+import com.example.weathermvvm.utils.NetworkConnection
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -42,7 +45,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiService(client: Retrofit) : ApiService {
+    fun provideApiService(client: Retrofit): ApiService {
         return client.create(ApiService::class.java)
     }
 }
