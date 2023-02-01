@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.weathermvvm.R
 import com.example.weathermvvm.databinding.FragmentFavoriteLocationsBinding
 import com.example.weathermvvm.domain.model.favorite.FavoritePlaces
+import com.example.weathermvvm.presentation.ui.MainActivityViewModel
 import com.example.weathermvvm.presentation.ui.adapter.FavoriteLocationsRwAdapter
 import com.example.weathermvvm.presentation.ui.adapter.features.OnItemClickListener
 import com.example.weathermvvm.presentation.ui.adapter.features.SwipeToDeleteCallback
@@ -28,6 +30,7 @@ class FavouriteLocationsFragment : Fragment(R.layout.fragment_favorite_locations
 
     private val binding by viewBinding(FragmentFavoriteLocationsBinding::bind)
     private val favoriteLocationsViewModel: FavoriteLocationsViewModel by viewModels()
+    private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
     private val favoriteLocationsRwAdapter: FavoriteLocationsRwAdapter by lazy {
         FavoriteLocationsRwAdapter()
     }
@@ -49,10 +52,7 @@ class FavouriteLocationsFragment : Fragment(R.layout.fragment_favorite_locations
     private fun setupRecyclerViewFeatures() {
         favoriteLocationsRwAdapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(name: String) {
-                setFragmentResult(
-                    StringConstants.fromFavoriteToSearchKey,
-                    bundleOf(StringConstants.fromFavoriteToSearchDataName to name)
-                )
+                mainActivityViewModel.setFavoriteLocationNameToShare(locationName = name)
                 findNavController().navigate(R.id.action_favouriteLocationsFragment_to_searchWeatherFragment)
             }
         })

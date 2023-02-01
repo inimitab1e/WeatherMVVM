@@ -1,11 +1,13 @@
 package com.example.weathermvvm.presentation.ui.search
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +16,7 @@ import com.example.weathermvvm.R
 import com.example.weathermvvm.databinding.FragmentSearchWeatherBinding
 import com.example.weathermvvm.domain.model.weather.WeatherSearchResponse
 import com.example.weathermvvm.extensions.onTextChange
+import com.example.weathermvvm.presentation.ui.MainActivityViewModel
 import com.example.weathermvvm.presentation.ui.adapter.SearchWeatherRwAdapter
 import com.example.weathermvvm.utils.StringConstants
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +26,7 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
 
     private val binding by viewBinding(FragmentSearchWeatherBinding::bind)
     private val viewModelSearch: SearchWeatherViewModel by viewModels()
+    private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
     private val searchWeatherRwAdapter: SearchWeatherRwAdapter by lazy {
         SearchWeatherRwAdapter()
     }
@@ -51,6 +55,10 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
             Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show()
         }
 
+        mainActivityViewModel.favoriteLocationNameToShare.observe(viewLifecycleOwner) { favoriteLocationName ->
+            setNameToEditView(favoriteLocationName)
+        }
+
         with(binding) {
             if (tvPlaceName.text.isEmpty()) {
                 rwWeather.isGone = true
@@ -60,14 +68,6 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
 
     override fun onResume() {
         super.onResume()
-
-        setFragmentResultListener(StringConstants.fromFavoriteToSearchKey) { key, bundle ->
-            val result = bundle.getString(StringConstants.fromFavoriteToSearchDataName)
-            result?.let {
-                setNameToEditView(result)
-                bundle.remove(StringConstants.fromFavoriteToSearchDataName)
-            }
-        }
 
         binding.searchLocationField.onTextChange { query ->
             if (binding.searchLocationField.text.isNotEmpty()) {
