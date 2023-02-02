@@ -10,12 +10,14 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.onNavDestinationSelected
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.weathermvvm.R
 import com.example.weathermvvm.databinding.ActivityMainBinding
 import com.example.weathermvvm.presentation.ui.search.SearchWeatherFragment
 import com.example.weathermvvm.presentation.ui.settings.SettingsFragment
 import com.example.weathermvvm.utils.NetworkConnection
+import com.example.weathermvvm.utils.StringConstants
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -36,8 +38,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun setupViews() {
         setSupportActionBar(binding.myToolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.home_page) as NavHostFragment
@@ -73,21 +73,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun handleOnSettingsButtonClick(): Boolean {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.home_page, SettingsFragment())
-            .commit()
-        binding.bottomNavigationView.isGone = true
+        navConrtoller.navigate(R.id.open_settings_fragment)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = StringConstants.settingsActionBarTitle
         return true
     }
 
     private fun handleOnHomeActionbarButtonClick(): Boolean {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.home_page, SearchWeatherFragment())
-            .commit()
+        navConrtoller.navigate(navConrtoller.previousBackStackEntry!!.destination.id)
         binding.bottomNavigationView.isVisible = true
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.title = getString(R.string.app_name)
         return true
     }
 }

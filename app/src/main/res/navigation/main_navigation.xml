@@ -16,9 +16,6 @@
         <action
             android:id="@+id/action_favouriteLocationsFragment_to_chooseLocationOnMapFragment"
             app:destination="@id/chooseLocationOnMapFragment" />
-        <action
-            android:id="@+id/action_favouriteLocationsFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchWeatherFragment"
@@ -31,9 +28,6 @@
         <action
             android:id="@+id/action_searchWeatherFragment_to_chooseLocationOnMapFragment"
             app:destination="@id/chooseLocationOnMapFragment" />
-        <action
-            android:id="@+id/action_searchWeatherFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseLocationOnMapFragment"
@@ -46,22 +40,14 @@
         <action
             android:id="@+id/action_chooseLocationOnMapFragment_to_searchWeatherFragment"
             app:destination="@id/searchWeatherFragment" />
-        <action
-            android:id="@+id/action_chooseLocationOnMapFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.weathermvvm.presentation.ui.settings.SettingsFragment"
-        android:label="SettingsFragment" >
-        <action
-            android:id="@+id/action_settingsFragment_to_searchWeatherFragment"
-            app:destination="@id/searchWeatherFragment" />
-        <action
-            android:id="@+id/action_settingsFragment_to_favouriteLocationsFragment"
-            app:destination="@id/favouriteLocationsFragment" />
-        <action
-            android:id="@+id/action_settingsFragment_to_chooseLocationOnMapFragment"
-            app:destination="@id/chooseLocationOnMapFragment" />
-    </fragment>
+        android:label="Settings" />
+
+    <action android:id="@+id/open_settings_fragment"
+        app:destination="@id/settingsFragment"/>
+
 </navigation>

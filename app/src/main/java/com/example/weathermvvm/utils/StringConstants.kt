@@ -5,4 +5,5 @@ object StringConstants {
     const val deletedSnackBarNotify = "Удалена локация: "
     const val undo = "Отменить"
     const val unknownError = "Неизвестная ошибка :("
+    const val settingsActionBarTitle = "Настройки"
 }
