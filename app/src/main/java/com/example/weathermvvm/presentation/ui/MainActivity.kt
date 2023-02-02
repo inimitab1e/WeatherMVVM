@@ -5,18 +5,21 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
+import androidx.preference.PreferenceManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.weathermvvm.R
 import com.example.weathermvvm.databinding.ActivityMainBinding
 import com.example.weathermvvm.presentation.ui.search.SearchWeatherFragment
 import com.example.weathermvvm.presentation.ui.settings.SettingsFragment
 import com.example.weathermvvm.utils.NetworkConnection
+import com.example.weathermvvm.utils.SettingsSharedPreferences
 import com.example.weathermvvm.utils.StringConstants
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -28,11 +31,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val connectivity: NetworkConnection by lazy {
         NetworkConnection(this)
     }
+    private val settingsSharesPref: SettingsSharedPreferences by lazy {
+        SettingsSharedPreferences(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setupViews()
+        checkAppThemeState()
         checkConnectivity()
     }
 
@@ -43,6 +50,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .findFragmentById(R.id.home_page) as NavHostFragment
         navConrtoller = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navConrtoller)
+    }
+
+    private fun checkAppThemeState() {
+        val state = settingsSharesPref.getAppThemeState()
+        if (state) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     private fun checkConnectivity() {

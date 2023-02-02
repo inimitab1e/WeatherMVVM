@@ -6,4 +6,5 @@ object StringConstants {
     const val undo = "Отменить"
     const val unknownError = "Неизвестная ошибка :("
     const val settingsActionBarTitle = "Настройки"
+    const val preferenceThemeKey = "appTheme"
 }

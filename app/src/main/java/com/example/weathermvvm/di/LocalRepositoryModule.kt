@@ -3,6 +3,7 @@ package com.example.weathermvvm.di
 import android.content.Context
 import com.example.weathermvvm.data.AppDispatchers
 import com.example.weathermvvm.data.local.FavoritePlacesDAOImpl
+import com.example.weathermvvm.utils.SettingsSharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
