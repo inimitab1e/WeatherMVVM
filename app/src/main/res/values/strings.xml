@@ -1,14 +1,19 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="city_list">City list</string>
     <string name="favourites">Favourites</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Search</string>
     <string name="map_search">Map search</string>
+
     <string name="favorite_locations_list_empty_notification">Список избранных мест пуст</string>
     <string name="when_search_field_is_empty">Введите название населённого пункта</string>
     <string name="bad_network_connection_title">Отсутствует соединение с сетью</string>
     <string name="bad_network_connection_message">Пожалуйста, проверьте соединение с интернетом для продолжения работы приложения</string>
+
     <string name="action_settings">Настройки</string>
+    <string name="preference_theme_title">Тема</string>
+    <string name="preference_theme_description">Включить тёмную тему</string>
+    <string name="preference_theme_key">appTheme</string>
 </resources>
