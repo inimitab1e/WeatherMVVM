@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".presentation.ui.search.SearchWeatherFragment">
 
-    <EditText
+    <SearchView
         android:id="@+id/search_location_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -23,7 +23,6 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="24sp"
-            android:text="@string/when_search_field_is_empty"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ibFavorite"
             app:layout_constraintStart_toStartOf="parent"

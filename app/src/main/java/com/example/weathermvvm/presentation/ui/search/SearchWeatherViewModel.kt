@@ -1,6 +1,5 @@
 package com.example.weathermvvm.presentation.ui.search
 
-
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +10,6 @@ import com.example.weathermvvm.domain.network_features.NetworkResponse
 import com.example.weathermvvm.domain.repository.GetWeatherSearch
 import com.example.weathermvvm.utils.StringConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,6 +21,9 @@ class SearchWeatherViewModel @Inject constructor(
 
     private var _weatherOnSuccessResponse = MutableLiveData<WeatherSearchResponse?>()
     val weatherOnSuccessResponse get() = _weatherOnSuccessResponse
+
+    private var _weatherOnSuccessEmptyResponse = MutableLiveData<Boolean>()
+    val weatherOnSuccessEmptyResponse get() = _weatherOnSuccessEmptyResponse
 
     private var _isLocationInFavorite = MutableLiveData<Boolean>()
     val isLocationInFavorite get() = _isLocationInFavorite
@@ -38,12 +39,13 @@ class SearchWeatherViewModel @Inject constructor(
         viewModelScope.launch {
             when(val coordsResponse = getWeatherSearchRepository.getCoordinatesByName(query)) {
                 is NetworkResponse.Success -> if (coordsResponse.body.isNotEmpty()) {
+                    weatherOnSuccessEmptyResponse.postValue(false)
                     getWeatherResponse(
                         latitude = coordsResponse.body[0].lat,
                         longitude = coordsResponse.body[0].lon
                     )
                 } else {
-                    weatherOnSuccessResponse.postValue(null)
+                    weatherOnSuccessEmptyResponse.postValue(true)
                     isLoading.postValue(false)
                 }
                 is NetworkResponse.NetworkError -> onErrorResponse.postValue(coordsResponse.error.message)
@@ -84,5 +86,9 @@ class SearchWeatherViewModel @Inject constructor(
         viewModelScope.launch {
             localRepository.removePlaceFromFavoriteByName(name = name)
         }
+    }
+
+    fun clearLiveDataValue() {
+        weatherOnSuccessResponse.postValue(null)
     }
 }

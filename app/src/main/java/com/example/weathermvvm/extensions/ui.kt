@@ -1,24 +1,21 @@
 package com.example.weathermvvm.extensions
 
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.EditText
-import android.content.Context
-import android.net.ConnectivityManager
+import android.widget.SearchView
+import android.widget.TextView
 
-
-inline fun EditText.onTextChange(crossinline listener: (String) -> Unit) {
-    this.addTextChangedListener(object: TextWatcher {
-        override fun beforeTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            //NO OP
+inline fun SearchView.onTextChange(crossinline listener: (String?) -> Unit) {
+    this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            return false
         }
 
-        override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            listener(charSequence.toString())
-        }
-
-        override fun afterTextChanged(p0: Editable?) {
-            //NO OP
+        override fun onQueryTextChange(query: String?): Boolean {
+            listener(query)
+            return true
         }
     })
+}
+
+fun TextView.clear() {
+    this.text = ""
 }
