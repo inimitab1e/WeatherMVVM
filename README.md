@@ -16,6 +16,7 @@ This is a weather (5 Day / 3 Hour) forecast Android Application with MVVM patter
 - Serialization
 - Coroutines
 - Room
+- Timber
 
 ### API
 I used [Open Weather Map API](https://openweathermap.org/api) for collecting weather information and [Open Street Map](https://github.com/osmdroid/osmdroid) for map.
