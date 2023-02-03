@@ -14,6 +14,7 @@ import com.example.weathermvvm.R
 import com.example.weathermvvm.databinding.FragmentSearchWeatherBinding
 import com.example.weathermvvm.domain.model.weather.WeatherSearchResponse
 import com.example.weathermvvm.extensions.clear
+import com.example.weathermvvm.extensions.onCloseButton
 import com.example.weathermvvm.extensions.onTextChange
 import com.example.weathermvvm.presentation.ui.MainActivityViewModel
 import com.example.weathermvvm.presentation.ui.adapter.SearchWeatherRwAdapter
@@ -67,18 +68,28 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
     override fun onResume() {
         super.onResume()
 
-        binding.searchLocationField.onTextChange { query ->
-            if (query != null && query.isNotEmpty()) {
-                doRequest(query)
-            } else {
-                emptySearchFieldUiSetup()
-            }
-        }
+        searchViewSetup()
 
         viewModelSearch.isLoading.observe(viewLifecycleOwner) { loadingState ->
             with(binding) {
                 tvPlaceName.isVisible = !loadingState
                 progressBar.isVisible = loadingState
+            }
+        }
+    }
+
+    private fun searchViewSetup() {
+        with(binding) {
+            searchLocationField.onTextChange { query ->
+                if (query != null && query.isNotEmpty()) {
+                    doRequest(query)
+                } else {
+                    emptySearchFieldUiSetup()
+                }
+            }
+
+            searchLocationField.onCloseButton {
+                emptySearchFieldUiSetup()
             }
         }
     }

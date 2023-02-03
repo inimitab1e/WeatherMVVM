@@ -15,5 +15,6 @@
     <string name="action_settings">Настройки</string>
     <string name="preference_theme_title">Тема</string>
     <string name="preference_theme_description">Включить тёмную тему</string>
+    <string name="preference_theme_summary">Для того, чтобы изменения темы вступили в силу, необходимо перезапустить приложение</string>
     <string name="preference_theme_key">appTheme</string>
 </resources>

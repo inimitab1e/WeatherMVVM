@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun handleOnSettingsButtonClick(): Boolean {
         navConrtoller.navigate(R.id.open_settings_fragment)
+        binding.bottomNavigationView.isGone = true
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = StringConstants.settingsActionBarTitle
         return true
