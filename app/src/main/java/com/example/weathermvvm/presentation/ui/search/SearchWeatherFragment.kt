@@ -160,9 +160,4 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
         binding.searchLocationField.setQuery(result, true)
         doRequest(result)
     }
-
-    override fun onStop() {
-        super.onStop()
-        viewModelSearch.clearLiveDataValue()
-    }
 }

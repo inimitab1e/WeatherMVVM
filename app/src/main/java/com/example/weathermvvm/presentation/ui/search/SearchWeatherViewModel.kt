@@ -87,8 +87,4 @@ class SearchWeatherViewModel @Inject constructor(
             localRepository.removePlaceFromFavoriteByName(name = name)
         }
     }
-
-    fun clearLiveDataValue() {
-        weatherOnSuccessResponse.postValue(null)
-    }
 }
