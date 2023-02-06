@@ -90,6 +90,7 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
 
             searchLocationField.onCloseButton {
                 emptySearchFieldUiSetup()
+                viewModelSearch.clearLiveDataValue()
             }
         }
     }
