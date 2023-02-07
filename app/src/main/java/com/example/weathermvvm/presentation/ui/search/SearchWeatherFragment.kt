@@ -35,6 +35,8 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        searchViewSetup()
+
         binding.rwWeather.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = searchWeatherRwAdapter
@@ -67,8 +69,6 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
 
     override fun onResume() {
         super.onResume()
-
-        searchViewSetup()
 
         viewModelSearch.isLoading.observe(viewLifecycleOwner) { loadingState ->
             with(binding) {

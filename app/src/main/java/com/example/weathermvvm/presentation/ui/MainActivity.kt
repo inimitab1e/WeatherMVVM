@@ -38,8 +38,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun setupNavigation() {
-        setSupportActionBar(binding.myToolbar)
-
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.home_page) as NavHostFragment
         navConrtoller = navHostFragment.navController
