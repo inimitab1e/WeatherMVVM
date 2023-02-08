@@ -29,7 +29,7 @@ class FavouriteLocationsFragment : Fragment(R.layout.fragment_favorite_locations
     private val binding by viewBinding(FragmentFavoriteLocationsBinding::bind)
     private val favoriteLocationsViewModel: FavoriteLocationsViewModel by viewModels()
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
-    private val favoriteLocationsRwAdapter: FavoriteLocationsRwAdapter by lazy {
+    private val favoriteLocationsRwAdapter: FavoriteLocationsRwAdapter by lazy(LazyThreadSafetyMode.NONE) {
         FavoriteLocationsRwAdapter()
     }
     private var listOfFavoritePlaces = mutableListOf<FavoritePlaces>()
@@ -42,6 +42,17 @@ class FavouriteLocationsFragment : Fragment(R.layout.fragment_favorite_locations
         binding.rwFavoriteLocations.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = favoriteLocationsRwAdapter
+        }
+
+        favoriteLocationsViewModel.listOfFavorites.observe(viewLifecycleOwner) { listOfFavorites ->
+            if (listOfFavorites?.isNotEmpty() == true) {
+                listOfFavoritePlaces = listOfFavorites
+                setupRecyclerViewList(listOfFavoritePlaces)
+            } else {
+                if (favoriteLocationsRwAdapter.itemCount == 0) {
+                    binding.listEmptyNotification.isVisible = true
+                }
+            }
         }
 
         setupRecyclerViewFeatures()
@@ -78,17 +89,17 @@ class FavouriteLocationsFragment : Fragment(R.layout.fragment_favorite_locations
                     Snackbar.LENGTH_LONG
                 )
                     .setAction(
-                        StringConstants.undo,
-                        View.OnClickListener {
-                            addDeletedItemBack(
-                                name = locationNameToDelete,
-                                latitude = latitude!!,
-                                longitude = longitute!!
-                            )
-                            listOfFavoritePlaces.add(position, deletedItem)
-                            setupRecyclerViewList(listOfFavoritePlaces)
-                            favoriteLocationsRwAdapter.notifyItemInserted(position)
-                        }).show()
+                        StringConstants.undo
+                    ) {
+                        addDeletedItemBack(
+                            name = locationNameToDelete,
+                            latitude = latitude!!,
+                            longitude = longitute!!
+                        )
+                        listOfFavoritePlaces.add(position, deletedItem)
+                        setupRecyclerViewList(listOfFavoritePlaces)
+                        favoriteLocationsRwAdapter.notifyItemInserted(position)
+                    }.show()
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
@@ -97,21 +108,6 @@ class FavouriteLocationsFragment : Fragment(R.layout.fragment_favorite_locations
 
     private fun addDeletedItemBack(name: String, latitude: Double, longitude: Double) {
         favoriteLocationsViewModel.addToFavorite(name, latitude, longitude)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        favoriteLocationsViewModel.listOfFavorites.observe(viewLifecycleOwner) { listOfFavorites ->
-            if (listOfFavorites.isNotEmpty()) {
-                listOfFavoritePlaces = listOfFavorites
-                setupRecyclerViewList(listOfFavoritePlaces)
-            } else {
-                if (favoriteLocationsRwAdapter.itemCount == 0) {
-                    binding.listEmptyNotification.isVisible = true
-                }
-            }
-        }
     }
 
     private fun setupRecyclerViewList(listOfFavoritePlaces: MutableList<FavoritePlaces>) {

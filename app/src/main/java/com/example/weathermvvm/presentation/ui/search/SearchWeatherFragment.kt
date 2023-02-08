@@ -65,10 +65,6 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
         mainActivityViewModel.favoriteLocationNameToShare.observe(viewLifecycleOwner) { favoriteLocationName ->
                 setNameToEditView(favoriteLocationName)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         viewModelSearch.isLoading.observe(viewLifecycleOwner) { loadingState ->
             with(binding) {

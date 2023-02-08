@@ -14,7 +14,7 @@ class FavoriteLocationsViewModel @Inject constructor(
     private val localRepository: FavoritePlacesDAOImpl
 ) : ViewModel() {
 
-    private var _listOfFavorites = MutableLiveData<MutableList<FavoritePlaces>>()
+    private var _listOfFavorites = MutableLiveData<MutableList<FavoritePlaces>?>()
     val listOfFavorites get() = _listOfFavorites
 
     fun getListOfFavoritePlaces() {
