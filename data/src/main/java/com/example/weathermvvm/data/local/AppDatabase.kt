@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.*
 import com.example.weathermvvm.data.local.utils.Converters
 import com.example.weathermvvm.domain.model.favorite.FavoritePlaces
+
 import com.example.weathermvvm.domain.repository.local.FavoritePlacesDAO
 
 @Database(entities = [FavoritePlaces::class], version = 1, exportSchema = false)

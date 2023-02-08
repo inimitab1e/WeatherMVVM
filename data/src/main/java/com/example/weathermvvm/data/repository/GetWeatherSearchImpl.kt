@@ -4,6 +4,8 @@ import com.example.data.BuildConfig
 import com.example.weathermvvm.data.AppDispatchers
 import com.example.weathermvvm.domain.repository.GetWeatherSearch
 import com.example.weathermvvm.data.network.ApiService
+import com.example.weathermvvm.data.toWeatherSearchResponse
+import com.example.weathermvvm.domain.network_features.result.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -18,22 +20,25 @@ class GetWeatherSearchImpl @Inject constructor(
     override suspend fun getCoordinatesByName(
         locationName: String
     ) = withContext(dispatchers.io) {
-        apiService.getCoordinates(
+        val coordsResponse = apiService.getCoordinates(
             url = getCoordsUrl,
             locationName = locationName,
             apiKey = apiKey
         )
+        return@withContext coordsResponse
     }
 
     override suspend fun getWeatherByCoordinates(
         latitude: Double,
         longitude: Double
     ) = withContext(dispatchers.io) {
-        apiService.getWeatherSearch(
+        val weatherResponse = apiService.getWeatherSearch(
             url = getWeatherSearchUrl,
             latitude = latitude,
             longitude = longitude,
             apiKey = apiKey
         )
+        val weatherResponseBody = weatherResponse.map { value -> value.toWeatherSearchResponse() }
+        return@withContext weatherResponseBody
     }
 }

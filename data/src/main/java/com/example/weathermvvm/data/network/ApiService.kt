@@ -1,12 +1,11 @@
 package com.example.weathermvvm.data.network
 
-import com.example.weathermvvm.domain.model.ErrorResponse
+import com.example.weathermvvm.data.modelDto.weather.WeatherSearchResponseDto
 import com.example.weathermvvm.domain.model.coordinates.LocationCoordsResponse
-import com.example.weathermvvm.domain.model.weather.WeatherSearchResponse
-import com.example.weathermvvm.domain.network_features.NetworkResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.http.Url
+import com.example.weathermvvm.domain.network_features.result.Result
 
 interface ApiService {
     @GET
@@ -15,7 +14,7 @@ interface ApiService {
         @Query("q") locationName: String,
         @Query("appid") apiKey: String,
         @Query("units") mode: String = "metric"
-    ): NetworkResponse<LocationCoordsResponse, ErrorResponse>
+    ): Result<LocationCoordsResponse>
 
     @GET
     suspend fun getWeatherSearch(
@@ -24,5 +23,5 @@ interface ApiService {
         @Query("lon") longitude: Double,
         @Query("appid") apiKey: String,
         @Query("units") mode: String = "metric"
-    ): NetworkResponse<WeatherSearchResponse, ErrorResponse>
+    ): Result<WeatherSearchResponseDto>
 }

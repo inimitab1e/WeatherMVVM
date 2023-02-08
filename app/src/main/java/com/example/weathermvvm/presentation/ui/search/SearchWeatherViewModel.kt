@@ -1,12 +1,12 @@
 package com.example.weathermvvm.presentation.ui.search
 
+import com.example.weathermvvm.domain.network_features.result.Result
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weathermvvm.data.local.FavoritePlacesDAOImpl
 import com.example.weathermvvm.domain.model.favorite.FavoritePlaces
 import com.example.weathermvvm.domain.model.weather.WeatherSearchResponse
-import com.example.weathermvvm.domain.network_features.NetworkResponse
 import com.example.weathermvvm.domain.repository.GetWeatherSearch
 import com.example.weathermvvm.utils.StringConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,17 +38,17 @@ class SearchWeatherViewModel @Inject constructor(
         isLoading.postValue(true)
         viewModelScope.launch {
             when(val coordsResponse = getWeatherSearchRepository.getCoordinatesByName(query)) {
-                is NetworkResponse.Success -> if (coordsResponse.body.isNotEmpty()) {
+                is Result.Success -> if (coordsResponse.value.isNotEmpty()) {
                     weatherOnSuccessEmptyResponse.postValue(false)
                     getWeatherResponse(
-                        latitude = coordsResponse.body[0].lat,
-                        longitude = coordsResponse.body[0].lon
+                        latitude = coordsResponse.value[0].lat,
+                        longitude = coordsResponse.value[0].lon
                     )
                 } else {
                     weatherOnSuccessEmptyResponse.postValue(true)
                     isLoading.postValue(false)
                 }
-                is NetworkResponse.NetworkError -> onErrorResponse.postValue(coordsResponse.error.message)
+                is Result.Failure<*> -> onErrorResponse.postValue(coordsResponse.toString())
                 else -> onErrorResponse.postValue(StringConstants.unknownError)
             }
             isLoading.postValue(false)
@@ -57,8 +57,8 @@ class SearchWeatherViewModel @Inject constructor(
 
     private suspend fun getWeatherResponse(latitude: Double, longitude: Double) {
         when(val response = getWeatherSearchRepository.getWeatherByCoordinates(latitude, longitude)) {
-            is NetworkResponse.Success -> weatherOnSuccessResponse.postValue(response.body)
-            is NetworkResponse.NetworkError -> onErrorResponse.postValue(response.error.message)
+            is Result.Success -> weatherOnSuccessResponse.postValue(response.value)
+            is Result.Failure<*> -> onErrorResponse.postValue(response.toString())
             else -> onErrorResponse.postValue(StringConstants.unknownError)
         }
         isLoading.postValue(false)

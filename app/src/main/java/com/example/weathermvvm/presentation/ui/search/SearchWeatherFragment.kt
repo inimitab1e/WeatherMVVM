@@ -97,9 +97,9 @@ class SearchWeatherFragment : Fragment(R.layout.fragment_search_weather) {
 
     private fun successResponseUiSetup(response: WeatherSearchResponse) {
         binding.apply {
-            val locationName = response.city!!.name
-            val latitude = response.city!!.coord.lat
-            val longitude = response.city!!.coord.lon
+            val locationName = response.city.name
+            val latitude = response.city.coord.lat
+            val longitude = response.city.coord.lon
             rwWeather.isVisible = true
             tvPlaceName.text = locationName
             favoritePlaceLogicSetup(locationName, latitude, longitude)

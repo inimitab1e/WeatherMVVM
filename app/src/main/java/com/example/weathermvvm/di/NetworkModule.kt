@@ -1,13 +1,10 @@
 package com.example.weathermvvm.di
 
-import android.content.Context
 import com.example.weathermvvm.data.network.ApiService
-import com.example.weathermvvm.domain.network_features.NetworkResponseAdapterFactory
-import com.example.weathermvvm.utils.NetworkConnection
+import com.example.weathermvvm.domain.network_features.retrofit.ResultAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -38,7 +35,7 @@ object NetworkModule {
         return Retrofit.Builder()
             .client(mOkHttpClient)
             .baseUrl("https://api.openweathermap.org/data/2.5/")
-            .addCallAdapterFactory(NetworkResponseAdapterFactory())
+            .addCallAdapterFactory(ResultAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
