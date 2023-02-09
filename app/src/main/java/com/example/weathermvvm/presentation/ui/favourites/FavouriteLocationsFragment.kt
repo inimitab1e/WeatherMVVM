@@ -37,8 +37,6 @@ class FavouriteLocationsFragment : Fragment(R.layout.fragment_favorite_locations
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        favoriteLocationsViewModel.getListOfFavoritePlaces()
-
         binding.rwFavoriteLocations.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = favoriteLocationsRwAdapter
@@ -46,7 +44,7 @@ class FavouriteLocationsFragment : Fragment(R.layout.fragment_favorite_locations
 
         favoriteLocationsViewModel.listOfFavorites.observe(viewLifecycleOwner) { listOfFavorites ->
             if (listOfFavorites?.isNotEmpty() == true) {
-                listOfFavoritePlaces = listOfFavorites
+                listOfFavoritePlaces = listOfFavorites.toMutableList()
                 setupRecyclerViewList(listOfFavoritePlaces)
             } else {
                 if (favoriteLocationsRwAdapter.itemCount == 0) {
