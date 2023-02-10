@@ -35,23 +35,23 @@ class SearchWeatherViewModel @Inject constructor(
     val isLoading get() = _isLoading
 
     fun getResponse(query: String) {
-        isLoading.postValue(true)
+        _isLoading.postValue(true)
         viewModelScope.launch {
             when(val coordsResponse = getWeatherSearchRepository.getCoordinatesByName(query)) {
                 is Result.Success -> if (coordsResponse.value.isNotEmpty()) {
-                    weatherOnSuccessEmptyResponse.postValue(false)
+                    _weatherOnSuccessEmptyResponse.postValue(false)
                     getWeatherResponse(
                         latitude = coordsResponse.value[0].lat,
                         longitude = coordsResponse.value[0].lon
                     )
                 } else {
-                    weatherOnSuccessEmptyResponse.postValue(true)
+                    _weatherOnSuccessEmptyResponse.postValue(true)
                     isLoading.postValue(false)
                 }
-                is Result.Failure<*> -> onErrorResponse.postValue(coordsResponse.toString())
-                else -> onErrorResponse.postValue(StringConstants.unknownError)
+                is Result.Failure<*> -> _onErrorResponse.postValue(coordsResponse.toString())
+                else -> _onErrorResponse.postValue(StringConstants.unknownError)
             }
-            isLoading.postValue(false)
+            _isLoading.postValue(false)
         }
     }
 
@@ -61,12 +61,12 @@ class SearchWeatherViewModel @Inject constructor(
             is Result.Failure<*> -> onErrorResponse.postValue(response.toString())
             else -> onErrorResponse.postValue(StringConstants.unknownError)
         }
-        isLoading.postValue(false)
+        _isLoading.postValue(false)
     }
 
     fun checkIfLocationInFavorite(name: String) {
         viewModelScope.launch {
-            isLocationInFavorite.postValue(localRepository.searchByName(name = name))
+            _isLocationInFavorite.postValue(localRepository.searchByName(name = name))
         }
     }
 

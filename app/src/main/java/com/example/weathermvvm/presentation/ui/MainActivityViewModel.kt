@@ -9,6 +9,6 @@ class MainActivityViewModel : ViewModel() {
     val favoriteLocationNameToShare get() = _favoriteLocationNameToShare
 
     fun setFavoriteLocationNameToShare(locationName: String) {
-        favoriteLocationNameToShare.postValue(locationName)
+        _favoriteLocationNameToShare.postValue(locationName)
     }
 }
