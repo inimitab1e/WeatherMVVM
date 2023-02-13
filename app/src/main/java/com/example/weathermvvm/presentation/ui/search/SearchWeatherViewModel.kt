@@ -1,5 +1,6 @@
 package com.example.weathermvvm.presentation.ui.search
 
+import androidx.lifecycle.LiveData
 import com.example.weathermvvm.domain.network_features.result.Result
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,19 +21,19 @@ class SearchWeatherViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _weatherOnSuccessResponse = MutableLiveData<WeatherSearchResponse?>()
-    val weatherOnSuccessResponse get() = _weatherOnSuccessResponse
+    val weatherOnSuccessResponse: LiveData<WeatherSearchResponse?> get() = _weatherOnSuccessResponse
 
     private var _weatherOnSuccessEmptyResponse = MutableLiveData<Boolean>()
-    val weatherOnSuccessEmptyResponse get() = _weatherOnSuccessEmptyResponse
+    val weatherOnSuccessEmptyResponse: LiveData<Boolean> get() = _weatherOnSuccessEmptyResponse
 
     private var _isLocationInFavorite = MutableLiveData<Boolean>()
-    val isLocationInFavorite get() = _isLocationInFavorite
+    val isLocationInFavorite: LiveData<Boolean> get() = _isLocationInFavorite
 
     private var _onErrorResponse = MutableLiveData<String>()
-    val onErrorResponse get() = _onErrorResponse
+    val onErrorResponse: LiveData<String> get() = _onErrorResponse
 
     private var _isLoading = MutableLiveData(false)
-    val isLoading get() = _isLoading
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     fun getResponse(query: String) {
         _isLoading.postValue(true)
@@ -46,7 +47,7 @@ class SearchWeatherViewModel @Inject constructor(
                     )
                 } else {
                     _weatherOnSuccessEmptyResponse.postValue(true)
-                    isLoading.postValue(false)
+                    _isLoading.postValue(false)
                 }
                 is Result.Failure<*> -> _onErrorResponse.postValue(coordsResponse.toString())
                 else -> _onErrorResponse.postValue(StringConstants.unknownError)
@@ -57,9 +58,9 @@ class SearchWeatherViewModel @Inject constructor(
 
     private suspend fun getWeatherResponse(latitude: Double, longitude: Double) {
         when(val response = getWeatherSearchRepository.getWeatherByCoordinates(latitude, longitude)) {
-            is Result.Success -> weatherOnSuccessResponse.postValue(response.value)
-            is Result.Failure<*> -> onErrorResponse.postValue(response.toString())
-            else -> onErrorResponse.postValue(StringConstants.unknownError)
+            is Result.Success -> _weatherOnSuccessResponse.postValue(response.value)
+            is Result.Failure<*> -> _onErrorResponse.postValue(response.toString())
+            else -> _onErrorResponse.postValue(StringConstants.unknownError)
         }
         _isLoading.postValue(false)
     }
@@ -89,6 +90,6 @@ class SearchWeatherViewModel @Inject constructor(
     }
 
     fun clearLiveDataValue() {
-        weatherOnSuccessResponse.postValue(null)
+        _weatherOnSuccessResponse.postValue(null)
     }
 }
