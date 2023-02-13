@@ -17,6 +17,9 @@ object LocalRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideFavoritePlacesLocalRepo(@ApplicationContext context: Context): FavoritePlacesDAOImpl =
-        FavoritePlacesDAOImpl(context = context, dispatchers = AppDispatchers())
+    fun provideFavoritePlacesLocalRepo(
+        @ApplicationContext context: Context,
+        appDispatchers: AppDispatchers
+    ): FavoritePlacesDAOImpl =
+        FavoritePlacesDAOImpl(context = context, dispatchers = appDispatchers)
 }

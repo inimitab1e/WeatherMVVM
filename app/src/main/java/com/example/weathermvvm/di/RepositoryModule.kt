@@ -17,6 +17,6 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideGetWeatherSearch(client: Retrofit) : GetWeatherSearch =
-        GetWeatherSearchImpl(apiService = client.create(ApiService::class.java), dispatchers = AppDispatchers())
+    fun provideGetWeatherSearch(apiService: ApiService, appDispatchers: AppDispatchers) : GetWeatherSearch =
+        GetWeatherSearchImpl(apiService = apiService, dispatchers = appDispatchers)
 }
